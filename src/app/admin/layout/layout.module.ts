@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutModule } from './layout/layout.module';
+import { LayoutComponent } from './layout.component';
 import { ComponentsModule } from './components/components.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LayoutComponent,
+  ],
   imports: [
     CommonModule,
-    LayoutModule,
     ComponentsModule
   ],
   exports:[
-    LayoutModule
+    LayoutComponent
   ]
 })
-export class AdminModule { }
+export class LayoutModule { }
