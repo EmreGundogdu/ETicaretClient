@@ -7,8 +7,10 @@ import { MessageType } from '../admin/alertify.service';
 })
 export class CustomToastrService {
   constructor(private toastr:ToastrService) { }
-  message(message:string,title:string,messageType:ToastrMessageType){
-    this.toastr[messageType](message,title)
+  message(message:string,title:string,messageType:ToastrMessageType,position:ToastrPosition){
+    this.toastr[messageType](message,title,{
+      positionClass:position
+    })
   }
 }
 
@@ -17,4 +19,15 @@ export enum ToastrMessageType{
   Info = "info",
   Warning = "warning",
   Error = "error"
+}
+
+export enum ToastrPosition{
+  TopRight = "toast-top-right",
+  BottomRight = "toast-bottom-right",
+  BottomLeft = "toast-bottom-left",
+  TopLeft = "toast-top-left",
+  TopFullWidth = "toast-top-full-width",
+  BottomFullWidth = "toast-bottom-full-width",
+  TopCenter = "toast-top-center",
+  BottomCenter = "toast-bottom-center"
 }
