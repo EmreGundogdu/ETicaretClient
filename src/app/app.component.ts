@@ -9,22 +9,7 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from './servic
 })
 export class AppComponent {
   title = 'ETicaretClient';
-  constructor(private toastrService:CustomToastrService){
-    toastrService.message("Merhaba","Emre",{
-      messageType:ToastrMessageType.Error,
-      position:ToastrPosition.TopRight
-    });
-    toastrService.message("Merhaba","Emre",{
-      messageType:ToastrMessageType.Info,
-      position:ToastrPosition.TopLeft
-    });
-    toastrService.message("Merhaba","Emre",{
-      messageType:ToastrMessageType.Success,
-      position:ToastrPosition.BottomLeft
-    });
-    toastrService.message("Merhaba","Emre",{
-      messageType:ToastrMessageType.Warning,
-      position:ToastrPosition.BottomRight
-    });
+  constructor(){
+    
   }
 }
