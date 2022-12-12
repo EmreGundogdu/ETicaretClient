@@ -19,7 +19,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     this.showSpinner(SpinnerType.BallPulseSync)
     this.httpClient.get<Product[]>({
       controller: "products",
-    }).subscribe(data => {});
+    }).subscribe(data => console.log(data));
 
     // this.httpClient.post({
     //   controller:"products"
