@@ -17,8 +17,8 @@ export class ProductsComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.showSpinner(SpinnerType.BallPulseSync)
     this.httpClient.get({
-      controller:"products",
-    }).subscribe(data=>console.log(data));
+      controller: "products",
+    }).subscribe(data => console.log(data));
 
     // this.httpClient.post({
     //   controller:"products"
@@ -27,5 +27,17 @@ export class ProductsComponent extends BaseComponent implements OnInit {
     //   stock:100,
     //   price:20
     // }).subscribe();
+    // this.httpClient.put({
+    //   controller: "products"
+    // },{
+    //   id:"306412bd-501d-4c84-8c75-e9b9a8d07515",
+    //   name:"Renkli Kalem",
+    //   stock:500,
+    //   price:5
+    // }).subscribe();
+
+    this.httpClient.delete({
+      controller:"products"
+    },"306412bd-501d-4c84-8c75-e9b9a8d07515").subscribe();
   }
 }
