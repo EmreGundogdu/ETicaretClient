@@ -12,7 +12,7 @@ export class HttpClientService {
     return `${requestParameter.baseUrl ? requestParameter.baseUrl : this.baseUrl}/${requestParameter.controller}${requestParameter.action ? `/${requestParameter.action}` : ""}`;
   }
 
-  get<T>(requestParameter: Partial<RequestParameters>, id?: string):Observable<T> {
+  get<T>(requestParameter: Partial<RequestParameters>, id?: string): Observable<T> {
     let url: string = "";
     if (requestParameter.fullEndpoint)
       url = requestParameter.fullEndpoint;
@@ -20,8 +20,13 @@ export class HttpClientService {
       url = `${this.url(requestParameter)}${id ? `/${id}` : ""}`;
     return this.httpClient.get<T>(url, { headers: requestParameter.headers })
   }
-  post() {
-
+  post<T>(requestParameter: Partial<RequestParameters>, body: Partial<T>):Observable<T> {
+    let url: string = "";
+    if (requestParameter.fullEndpoint)
+      url = requestParameter.fullEndpoint;
+    else
+      url = `${this.url(requestParameter)}`
+   return this.httpClient.post<T>(url, body, { headers: requestParameter.headers })
   }
   put() {
 
