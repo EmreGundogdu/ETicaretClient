@@ -22,7 +22,7 @@ m(){
     messageType :MessageType.Success,
     delay : 2,
     dismissOthers:false,
-    positiom:Position.BottomLeft
+    position:Position.BottomLeft
   })
 }
 d(){
