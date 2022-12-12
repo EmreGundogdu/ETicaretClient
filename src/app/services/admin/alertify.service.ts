@@ -9,7 +9,7 @@ export class AlertifyService {
   //message(message: string, messageType: MessageType,position:Position,delay:number=3,dismissOthers:boolean=false) {
   message(message: string,options:Partial<AlertfiyOptions>) {
     alertify.set('notifier','delay',options.delay);
-    alertify.set('notifier','position',options.positiom);
+    alertify.set('notifier','position',options.position);
     const msj = alertify[options.messageType](message);
     if (options.dismissOthers) {
       msj.dismissOthers();      
@@ -21,7 +21,7 @@ export class AlertifyService {
 }
 export class AlertfiyOptions{
   messageType:MessageType = MessageType.Message;
-  positiom:Position = Position.BottomLeft;
+  position:Position = Position.BottomLeft;
   delay:number = 2;
   dismissOthers:boolean = true;
 }
