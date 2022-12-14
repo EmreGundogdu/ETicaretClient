@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Create_Product } from 'src/app/contracts/create_product';
 import { List_Product } from 'src/app/contracts/list_product';
 import { HttpClientService } from '../http-client.service';
@@ -10,6 +11,7 @@ import { HttpClientService } from '../http-client.service';
 export class ProductService {
 
   constructor(private httpClient: HttpClientService) { }
+
   createProduct(product: Create_Product, successCallBack?: () => void, errorCallback?: (errorMessage: string) => void) {
     this.httpClient.post({
       controller: "products"
@@ -27,9 +29,10 @@ export class ProductService {
     })
   };
 
-  async read(successCallBack?: () => void, errorCallback?: (errorMessage: string) => void): Promise<List_Product[]> {
-    const promiseData: Promise<List_Product[]> = this.httpClient.get<List_Product[]>({
-      controller: "products"
+  async read(page:number=0,size:number=5, successCallBack?: () => void, errorCallback?: (errorMessage: string) => void): Promise<{totalCount:number;products:List_Product[]}> {
+    const promiseData: Promise<{totalCount:number;products:List_Product[]}> = this.httpClient.get<{totalCount:number;products:List_Product[]}>({
+      controller: "products",
+      queryString:`page=${page}&size=${size}`
     }).toPromise();
     
     promiseData.then(d => successCallBack()).catch((errorResponse: HttpErrorResponse) => errorCallback(errorResponse.message))
