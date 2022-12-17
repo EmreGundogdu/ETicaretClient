@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
-import { FileUploadComponent } from 'src/app/services/common/file-upload/file-upload.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -14,6 +14,7 @@ import { FileUploadDialogComponent } from '../file-upload-dialog/file-upload-dia
   imports: [
     CommonModule,
     MatDialogModule,
+    MatButtonModule
   ]
 })
 export class DialogModule { }
