@@ -64,7 +64,6 @@ export class DeleteDirective {
     dialogRef.afterClosed().subscribe(result => {
       if (result == DeleteState.Yes)
         afterClosed();
-
-    })
+    });
   }
 }
