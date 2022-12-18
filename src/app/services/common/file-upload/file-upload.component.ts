@@ -2,6 +2,8 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 import { FileUploadDialogComponent, FileUploadDialogState } from 'src/app/dialogs/file-upload-dialog/file-upload-dialog.component';
 import { AlertifyService, MessageType, Position } from '../../admin/alertify.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
@@ -14,7 +16,7 @@ import { HttpClientService } from '../http-client.service';
 })
 export class FileUploadComponent {
 
-  constructor(private httpClientService: HttpClientService, private alertify: AlertifyService, private customToastr: CustomToastrService,private dialog:MatDialog,private dialogService:DialogService) { }
+  constructor(private httpClientService: HttpClientService, private alertify: AlertifyService, private customToastr: CustomToastrService,private spinner:NgxSpinnerService,private dialog:MatDialog,private dialogService:DialogService) { }
 
   public files: NgxFileDropEntry[];
 
@@ -33,6 +35,7 @@ export class FileUploadComponent {
       componentType:FileUploadDialogComponent,
       data:FileUploadDialogState.Yes,
       afterClsoed:()=> {
+        this.spinner.show(SpinnerType.BallPulseSync);
         this.httpClientService.post({
           controller: this.options.controller,
           action: this.options.action,
@@ -40,6 +43,7 @@ export class FileUploadComponent {
           headers: new HttpHeaders({ "responseType": "blob" })
         }, fileData).subscribe(data => {
           const message: string = "Dosyalar başarıyla yüklendi";
+          this.spinner.hide(SpinnerType.BallPulseSync)
           if (this.options.isAdminPage) {
             this.alertify.message(message, {
               dismissOthers: true,
@@ -55,6 +59,7 @@ export class FileUploadComponent {
         }, (errorResponse: HttpErrorResponse) => {
     
           const message: string = "Dosyalar yüklenirken hata meydana geldi";
+          this.spinner.hide(SpinnerType.BallPulseSync)
           if (this.options.isAdminPage) {
             this.alertify.message(message, {
               dismissOthers: true,
