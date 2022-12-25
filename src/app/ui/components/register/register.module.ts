@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         component:RegisterComponent
       }
     ]),
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class RegisterModule { }

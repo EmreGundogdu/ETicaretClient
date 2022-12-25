@@ -11,11 +11,19 @@ export class UserService {
 
   constructor(private httpClient: HttpClientService) { }
 
-  async create(user: User) :Promise<Create_User>{
-    debugger;
+  async create(user: User): Promise<Create_User> {
     const observable: Observable<Create_User | User> = this.httpClient.post<Create_User | User>({
       controller: "users"
     }, user);
     return await firstValueFrom(observable) as Create_User;
+  }
+
+  async login(userNameOrEmail: string, password: string,callBackFunction?:()=>void) : Promise<void> {
+   const observable:Observable<any> = this.httpClient.post({
+      controller: "users",
+      action: "login"
+    }, { userNameOrEmail, password })
+    await firstValueFrom(observable);
+    callBackFunction();
   }
 }
