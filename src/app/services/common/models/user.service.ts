@@ -1,3 +1,4 @@
+import { SocialUser } from '@abacritt/angularx-social-login';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Token } from 'src/app/contracts/token/token';
@@ -12,7 +13,7 @@ import { HttpClientService } from '../http-client.service';
 })
 export class UserService {
 
-  constructor(private httpClient: HttpClientService,private toastrService:CustomToastrService) { }
+  constructor(private httpClient: HttpClientService, private toastrService: CustomToastrService) { }
 
   async create(user: User): Promise<Create_User> {
     const observable: Observable<Create_User | User> = this.httpClient.post<Create_User | User>({
@@ -21,22 +22,34 @@ export class UserService {
     return await firstValueFrom(observable) as Create_User;
   }
 
-  async login(userNameOrEmail: string, password: string,callBackFunction?:()=>void) : Promise<any> {
-   const observable:Observable<any|TokenResponse> = this.httpClient.post<any|TokenResponse>({
+  async login(userNameOrEmail: string, password: string, callBackFunction?: () => void): Promise<any> {
+    const observable: Observable<any | TokenResponse> = this.httpClient.post<any | TokenResponse>({
       controller: "users",
       action: "login"
     }, { userNameOrEmail, password })
-    const tokenResponse:TokenResponse = await firstValueFrom(observable) as TokenResponse;
-    if(tokenResponse)
-    {
-      localStorage.setItem("accessToken",tokenResponse.token.accessToken);
+    const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
+    if (tokenResponse) {
+      localStorage.setItem("accessToken", tokenResponse.token.accessToken);
 
-      this.toastrService.message("Kullanıcı Girişi Başarıyla Sağlanmıştır","Giriş Başarılı",{
-        messageType:ToastrMessageType.Success,
-        position:ToastrPosition.BottomLeft
+      this.toastrService.message("Kullanıcı Girişi Başarıyla Sağlanmıştır", "Giriş Başarılı", {
+        messageType: ToastrMessageType.Success,
+        position: ToastrPosition.BottomLeft
       })
     }
-    
+
     callBackFunction();
+  }
+
+  async googleLogin(user: SocialUser, callbackFunction?: () => void): Promise<any> {
+    const observable: Observable<SocialUser | TokenResponse> = this.httpClient.post<SocialUser | TokenResponse>({
+      action: "google-login",
+      controller: "users"
+    }, user);
+    const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
+    if (tokenResponse) {
+      localStorage.setItem("accessToken", tokenResponse.token.accessToken);
+      this.toastrService.message("Google Login İşlemi Başarılı", "Giriş Başarılı", { messageType: ToastrMessageType.Success, position: ToastrPosition.TopRight });
+    }
+    callbackFunction();
   }
 }

@@ -44,7 +44,7 @@ import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider("957600947173-p70lrqqhr09h965tdg3590122k70q04.apps.googleusercontent.com")
+            provider: new GoogleLoginProvider("957600947173-p70lrqqhr09h965tdg3590122k70q04c.apps.googleusercontent.com")
           }
         ],
         onError: err => console.log(err)
