@@ -22,15 +22,16 @@ export class LoginComponent extends BaseComponent implements OnInit {
       switch (user.provider) {
         case "GOOGLE":
           await userService.googleLogin(user, () => {
-            this.authService.identityCheck();
-            this.hideSpinner(SpinnerType.BallPulseSync)
           })
           break;
         case "FACEBOOK":
-
+          await userService.facebookLogin(user, () => {
+          })
           break;
       }
     });
+    this.authService.identityCheck();
+    this.hideSpinner(SpinnerType.BallPulseSync)
   }
 
   ngOnInit(): void {
