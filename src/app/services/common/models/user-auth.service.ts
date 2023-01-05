@@ -20,14 +20,29 @@ export class UserAuthService {
     const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
     if (tokenResponse) {
       localStorage.setItem("accessToken", tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
 
       this.toastrService.message("Kullanıcı Girişi Başarıyla Sağlanmıştır", "Giriş Başarılı", {
         messageType: ToastrMessageType.Success,
         position: ToastrPosition.BottomLeft
       })
     }
-
     callBackFunction();
+  }
+
+  async refreshTokenLogin(refreshToken: string, callbackFunction?: () => void): Promise<any> {
+    const observable: Observable<any | TokenResponse> = this.httpClient.post({
+      action: "refreshTokenLogin",
+      controller: "auth"
+    }, {
+      refreshToken: refreshToken
+    });
+    const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
+    if (tokenResponse) {
+      localStorage.setItem("accessToken", tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
+    }
+    callbackFunction();
   }
 
   async googleLogin(user: SocialUser, callbackFunction?: () => void): Promise<any> {
@@ -38,6 +53,7 @@ export class UserAuthService {
     const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
     if (tokenResponse) {
       localStorage.setItem("accessToken", tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
       this.toastrService.message("Google Login İşlemi Başarılı", "Giriş Başarılı", { messageType: ToastrMessageType.Success, position: ToastrPosition.TopRight });
     }
     callbackFunction();
@@ -51,6 +67,7 @@ export class UserAuthService {
     const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
     if (tokenResponse) {
       localStorage.setItem("accessToken", tokenResponse.token.accessToken);
+      localStorage.setItem("refreshToken", tokenResponse.token.refreshToken);
 
       this.toastrService.message("Facebook üzerinden başarıyla giriş sağlanmıştır", "Giriş Başarılı", {
         messageType: ToastrMessageType.Success,

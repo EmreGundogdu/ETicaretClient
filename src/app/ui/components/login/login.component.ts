@@ -3,11 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
-import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
 import { AuthService } from 'src/app/services/common/auth.service';
-import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
-import { UserService } from 'src/app/services/common/models/user.service';
 
 @Component({
   selector: 'app-login',
