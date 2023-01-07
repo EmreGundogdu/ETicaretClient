@@ -18,6 +18,8 @@ export class ListComponent implements OnInit {
   pageSize: number = 12;
   pageList: number[] = [];
   products: List_Product[];
+
+
   async ngOnInit() {
     this.activatedRoute.params.subscribe(async params => {
       this.currentPageNo = parseInt(params["pageNo"] ?? 1);
@@ -29,6 +31,17 @@ export class ListComponent implements OnInit {
 
         });
       this.products = data.products;
+      this.products.forEach((product, i) => {
+        let p: any = {
+          name: product.name,
+          id: product.id,
+          price: product.price,
+          stock: product.stock,
+          updateDate: product.updatedData,
+          createdDate: product.createdDate,
+          imagePath: product.productImageFiles?.find(x => x.showcase).path
+        }
+      });
       this.totalProductCount = data.totalCount;
       this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
 
