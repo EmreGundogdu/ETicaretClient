@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
         });
       this.products = data.products;
       this.totalProductCount = data.totalCount;
-      this.totalPageCount = Math.round(this.totalProductCount / this.pageSize);
+      this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
 
       this.pageList = [];
       if (this.currentPageNo - 3 <= 0)
