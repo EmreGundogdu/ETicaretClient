@@ -7,14 +7,13 @@ import { ComponentType } from 'ngx-toastr';
 })
 export class DialogService {
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog: MatDialog) { }
 
   openDialog(dialogParameters: Partial<DialogParameters>): void {
-    debugger;
     const dialogRef = this.dialog.open(dialogParameters.componentType, {
       width: dialogParameters.options?.width,
       height: dialogParameters.options?.height,
-      position:dialogParameters.options?.position,
+      position: dialogParameters.options?.position,
       data: dialogParameters.data,
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -24,15 +23,15 @@ export class DialogService {
   }
 }
 
-export class DialogParameters{
-  componentType:ComponentType<any>;
-  data:any;
-  afterClsoed:()=>void;
-  options?:Partial<DialogOptions> = new DialogOptions();
+export class DialogParameters {
+  componentType: ComponentType<any>;
+  data: any;
+  afterClsoed: () => void;
+  options?: Partial<DialogOptions> = new DialogOptions();
 }
 
-export class DialogOptions{
-  width?:string = "250px";
-  height?:string;
-  position?:DialogPosition;
+export class DialogOptions {
+  width?: string = "250px";
+  height?: string;
+  position?: DialogPosition;
 }

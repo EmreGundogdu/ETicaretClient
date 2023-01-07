@@ -16,7 +16,7 @@ import { HttpClientService } from '../http-client.service';
 })
 export class FileUploadComponent {
 
-  constructor(private httpClientService: HttpClientService, private alertify: AlertifyService, private customToastr: CustomToastrService,private spinner:NgxSpinnerService,private dialog:MatDialog,private dialogService:DialogService) { }
+  constructor(private httpClientService: HttpClientService, private alertify: AlertifyService, private customToastr: CustomToastrService, private spinner: NgxSpinnerService, private dialog: MatDialog, private dialogService: DialogService) { }
 
   public files: NgxFileDropEntry[];
 
@@ -30,11 +30,10 @@ export class FileUploadComponent {
         fileData.append(_file.name, _file, file.relativePath);
       });
     }
-    debugger;
     this.dialogService.openDialog({
-      componentType:FileUploadDialogComponent,
-      data:FileUploadDialogState.Yes,
-      afterClsoed:()=> {
+      componentType: FileUploadDialogComponent,
+      data: FileUploadDialogState.Yes,
+      afterClsoed: () => {
         this.spinner.show(SpinnerType.BallPulseSync);
         this.httpClientService.post({
           controller: this.options.controller,
@@ -57,7 +56,7 @@ export class FileUploadComponent {
             })
           }
         }, (errorResponse: HttpErrorResponse) => {
-    
+
           const message: string = "Dosyalar yüklenirken hata meydana geldi";
           this.spinner.hide(SpinnerType.BallPulseSync)
           if (this.options.isAdminPage) {
@@ -76,7 +75,7 @@ export class FileUploadComponent {
       }
     });
   }
-  
+
   // openDialog(afterClosed: any): void {
   //   const dialogRef = this.dialog.open(FileUploadDialogComponent, {
   //     width: '250px',
