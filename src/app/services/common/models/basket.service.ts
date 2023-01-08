@@ -19,14 +19,14 @@ export class BasketService {
     return await firstValueFrom(observable);
   }
 
-  async add(product: Create_Basket_Item): Promise<void> {
+  async add(basketItem: Create_Basket_Item): Promise<void> {
     const observable: Observable<any> = this.httpClientService.post({
       controller: "baskets"
-    }, product);
+    }, basketItem);
     await firstValueFrom(observable);
   }
 
-  async put(basketItem: Update_Basket_Item): Promise<void> {
+  async updateQuantity(basketItem: Update_Basket_Item): Promise<void> {
     const observable: Observable<any> = this.httpClientService.put({
       controller: "baskets"
     }, basketItem);

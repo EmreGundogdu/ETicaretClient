@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { BaseUrl } from 'src/app/contracts/base-url';
+import { Create_Basket_Item } from 'src/app/contracts/basket/create_basket_item';
 import { List_Product } from 'src/app/contracts/list_product';
+import { BasketService } from 'src/app/services/common/models/basket.service';
 import { FileService } from 'src/app/services/common/models/file-service';
 import { ProductService } from 'src/app/services/common/models/product.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends BaseComponent implements OnInit {
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private fileService: FileService) { }
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private fileService: FileService, private basketService: BasketService, spinner: NgxSpinnerService, private toastrService: CustomToastrService) {
+    super(spinner);
+  }
 
   currentPageNo: number;
   totalProductCount: number;
@@ -63,5 +70,17 @@ export class ListComponent implements OnInit {
         for (let i = this.currentPageNo - 3; i <= this.currentPageNo + 3; i++)
           this.pageList.push(i);
     })
+  }
+  async addToBasket(product: List_Product) {
+    this.showSpinner(SpinnerType.BallPulseSync)
+    let _basketItem: Create_Basket_Item = new Create_Basket_Item();
+    _basketItem.productId = product.id;
+    _basketItem.quantity = 1;
+    await this.basketService.add(_basketItem);
+    this.hideSpinner(SpinnerType.BallPulseSync);
+    this.toastrService.message("Ürün sepete eklendi", "Sepete Eklendi", {
+      messageType: ToastrMessageType.Success,
+      position: ToastrPosition.TopRight
+    });
   }
 }
