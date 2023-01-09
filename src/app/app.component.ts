@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { MessageType } from './services/admin/alertify.service';
+import { DynamicLoadComponentDirectiveDirective } from './directives/common/dynamic-load-component-directive.directive';
 import { AuthService } from './services/common/auth.service';
+import { ComponentType, DynamicLoadComponentService } from './services/common/dynamic-load-component.service';
 import { HttpClientService } from './services/common/http-client.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 declare var $: any
@@ -12,7 +12,9 @@ declare var $: any
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public authService: AuthService, private toastrService: CustomToastrService, private router: Router, private httpClientService: HttpClientService) {
+  @ViewChild(DynamicLoadComponentDirectiveDirective, { static: true })
+  dynamicLoadComponentDirective: DynamicLoadComponentDirectiveDirective;
+  constructor(public authService: AuthService, private toastrService: CustomToastrService, private router: Router, private httpClientService: HttpClientService, private dynamicLoadComponentService: DynamicLoadComponentService) {
     authService.identityCheck();
   }
   signOut() {
@@ -26,6 +28,6 @@ export class AppComponent {
   }
 
   loadComponent() {
-
+    this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent, this.dynamicLoadComponentDirective.viewContaineref);
   }
 }

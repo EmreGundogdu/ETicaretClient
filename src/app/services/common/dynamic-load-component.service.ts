@@ -10,20 +10,20 @@ export class DynamicLoadComponentService {
   //ComponentFactory : Componentlerin instance'lerini oluşturmak için kullanılan nesnedir.
   //ComponentFactoryResolver : Belirli bir component için ComponentFactory'i resolve eden sınıftır. İçerisindeki resolveComponentFactory fonk aracılığıyla ilgili componente dair ComponentFactory nesnesini opluşturup, döner.
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor() { }
 
-  async loadComponent(component: Component, viewContainerRef: ViewContainerRef) {
+  async loadComponent(component: ComponentType, viewContainerRef: ViewContainerRef) {
     let _component: any = null;
     switch (component) {
-      case Component.BasketComponent:
-        _component = await import("../../ui/components/baskets/baskets.component");
+      case ComponentType.BasketComponent:
+        _component = (await import("../../ui/components/baskets/baskets.component")).BasketsComponent;
         break;
     }
     viewContainerRef.clear();
-    return viewContainerRef.createComponent(this.componentFactoryResolver.resolveComponentFactory(_component))
+    return viewContainerRef.createComponent(_component)
   }
 }
 
-export enum Component {
+export enum ComponentType {
   BasketComponent,
 }
