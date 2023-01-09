@@ -24,4 +24,8 @@ export class AppComponent {
       position: ToastrPosition.TopRight
     });
   }
+
+  loadComponent() {
+
+  }
 }
