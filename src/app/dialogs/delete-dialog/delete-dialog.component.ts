@@ -8,12 +8,13 @@ import { BaseDialog } from '../base/base-dialog';
   styleUrls: ['./delete-dialog.component.css']
 })
 export class DeleteDialogComponent extends BaseDialog<DeleteDialogComponent> {
-  constructor(dialogRef:MatDialogRef<DeleteDialogComponent>,@Inject(MAT_DIALOG_DATA) public data:DeleteState,){
+  constructor(dialogRef: MatDialogRef<DeleteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DeleteState,) {
     super(dialogRef);
   }
 }
 
-export enum DeleteState{
+export enum DeleteState {
   Yes,
   No
 }
