@@ -1,11 +1,8 @@
-import { SocialUser } from '@abacritt/angularx-social-login';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { Token } from 'src/app/contracts/token/token';
-import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
 import { Create_User } from 'src/app/contracts/users/create_user';
 import { User } from 'src/app/entities/user';
-import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
+import { CustomToastrService } from '../../ui/custom-toastr.service';
 import { HttpClientService } from '../http-client.service';
 
 @Injectable({
@@ -22,5 +19,20 @@ export class UserService {
     return await firstValueFrom(observable) as Create_User;
   }
 
+  async updatePassword(userId: string, resetToken: string, passowrd: string, passwordConfirm: string, successCallBack?: () => void, errorCallBack?: (error) => void) {
+    const observable: Observable<any> = this.httpClient.post({
+      controller: "users",
+      action: "update-password",
+    }, {
+      userId: userId,
+      resetToken: resetToken,
+      passowrd: passowrd,
+      passwordConfirm: passwordConfirm
+    });
+    const promiseData: Promise<any> = await firstValueFrom(observable);
+    promiseData.then(value => successCallBack()).catch(error => errorCallBack(error));
+    await promiseData;
+
+  }
 
 }
