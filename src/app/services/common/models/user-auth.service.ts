@@ -92,7 +92,7 @@ export class UserAuthService {
     callBackFunction();
   }
 
-  async verifyResetToken(resetToken: string, userId: string, callBackFunction?: () => void) {
+  async verifyResetToken(resetToken: string, userId: string, callBackFunction?: () => void): Promise<boolean> {
     const observable: Observable<any> = this.httpClient.post({
       controller: "auth",
       action: "verify-rest-token"
@@ -100,7 +100,8 @@ export class UserAuthService {
       resetToken: resetToken,
       userId: userId
     })
-    await firstValueFrom(observable);
+    const state: boolean = await firstValueFrom(observable);
     callBackFunction();
+    return state;
   }
 }
