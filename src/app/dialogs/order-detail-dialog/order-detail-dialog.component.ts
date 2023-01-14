@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Order } from 'src/app/contracts/order/order';
+import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
 import { BaseDialog } from '../base/base-dialog';
+import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -10,7 +12,7 @@ import { BaseDialog } from '../base/base-dialog';
   styleUrls: ['./order-detail-dialog.component.css']
 })
 export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComponent> implements OnInit {
-  constructor(dialogRef: MatDialogRef<OrderDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: OrderDetailDialogState | string, private orderService: OrderService) {
+  constructor(dialogRef: MatDialogRef<OrderDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: OrderDetailDialogState | string, private orderService: OrderService, private dialogService: DialogService) {
     super(dialogRef)
   }
   order: Order;
@@ -23,6 +25,16 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     this.order = await this.orderService.getOrderById(this.data as string);
     this.dataSource = this.order.basketItems;
     this.totalPrice = this.order.basketItems.map((basketItem, index) => basketItem.price * basketItem.quantity).reduce((price, current) => price + current);
+  }
+
+  completeOrder() {
+    this.dialogService.openDialog({
+      componentType: CompleteOrderDialogComponent,
+      data: CompleteOrderState.Yes,
+      afterClsoed: async () => {
+        await this.orderService.completeOrder(this.data as string);
+      }
+    });
   }
 
 }

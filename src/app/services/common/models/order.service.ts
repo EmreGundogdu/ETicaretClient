@@ -36,4 +36,13 @@ export class OrderService {
     promiseData.then(value => successCallBack()).catch(error => errorCallback(error))
     return await promiseData;
   }
+
+  async completeOrder(id: string) {
+    const observable: Observable<any> = this.httpClientService.get({
+      controller: "orders",
+      action: "complete-order"
+    }, id);
+    await firstValueFrom(observable);
+  }
 }
+
