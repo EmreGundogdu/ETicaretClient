@@ -5,4 +5,5 @@ export class Order {
   description: string;
   id: string;
   orderCode: string;
+  completed: boolean;
 }

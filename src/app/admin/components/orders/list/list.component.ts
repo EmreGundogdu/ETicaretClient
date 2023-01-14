@@ -24,7 +24,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     throw new Error('Method not implemented.');
   }
 
-  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createdDate', 'delete', 'viewDetail'];
+  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createdDate', 'completed', 'delete', 'viewDetail'];
   dataSource: MatTableDataSource<List_Order> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
