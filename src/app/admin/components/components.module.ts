@@ -4,6 +4,8 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { CustomersModule } from './customers/customers.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AuthroizeMenuComponent } from './authroize-menu/authroize-menu.component';
+import { AuthroizeMenuModule } from './authroize-menu/authroize-menu.module';
 
 
 
@@ -15,7 +17,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     ProductsModule,
     OrdersModule,
     CustomersModule,
-    DashboardModule
+    DashboardModule,
+    AuthroizeMenuModule
   ]
 })
 export class ComponentsModule { }
