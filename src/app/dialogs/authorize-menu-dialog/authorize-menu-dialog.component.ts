@@ -21,6 +21,10 @@ export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialog
   async ngOnInit() {
     this.roles = await this.roleService.getRoles(-1, -1);
   }
+
+  assignRoles(rolesComponent) {
+
+  }
 }
 
 export enum AuthroizeMenuState {
