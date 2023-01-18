@@ -1,11 +1,12 @@
-<h1 matBadge="{{roless.selectedOptions.selected.length}}/{{roles.totalCount}}" matBadgeOverlap="false" mat-dialog-title>
+<h1 matBadge="{{rolesComponent.selectedOptions.selected.length}}/{{roles.totalCount}}" matBadgeOverlap="false"
+  mat-dialog-title>
   {{data.name}}
   Endpointine Assing Role!</h1>
 <div mat-dialog-content>
   <p>İlgili Endpointine rol atamak istermisiniz</p>
 </div>
 
-<mat-selection-list #roless>
+<mat-selection-list #rolesComponent>
   <mat-list-option *ngFor="let item of roles.datas">
     {{item.name}}
   </mat-list-option>
