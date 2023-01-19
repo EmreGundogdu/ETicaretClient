@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { HttpClientService } from '../http-client.service';
 
 @Injectable({
@@ -22,5 +22,17 @@ export class AuthorizationEndpointService {
       error: errorCallback
     });
     await promiseData;
+  }
+
+  async getRolesToEndpoints(code: string, menu: string, successCallback?: () => void, errorCallback?: (error) => void): Promise<string[]> {
+    const observable: Observable<any> = this.httpclientService.post({
+      controller: "authorizationendpoints",
+      action: "get-roles-to-endpoint"
+    }, {
+      code: code, menu: menu
+    });
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(successCallback).catch(errorCallback);
+    return (await promiseData).roles;
   }
 }
