@@ -24,12 +24,12 @@ export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialog
   assignedRoles: string[];
   listRoles: { name: string, selected: boolean }[];
   async ngOnInit() {
-    this.roles = await this.roleService.getRoles(-1, -1);
     this.assignedRoles = await this.authorizationEndpointService.getRolesToEndpoints(this.data.code, this.data.menuName);
+    this.roles = await this.roleService.getRoles(-1, -1);
     this.listRoles = this.roles.datas.map((x: any) => {
       return {
         name: x.name,
-        selected: this.assignedRoles.indexOf(x) > -1
+        selected: this.assignedRoles?.indexOf(x) > -1
       }
     });
   }
