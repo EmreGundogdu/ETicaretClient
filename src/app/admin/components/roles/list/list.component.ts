@@ -14,30 +14,29 @@ import { RoleService } from 'src/app/services/common/models/role.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent extends BaseComponent implements OnInit {
-  constructor(spinner: NgxSpinnerService, private roleService: RoleService, private alertifyService: AlertifyService, private dialogService: DialogService) {
+  constructor(spinner: NgxSpinnerService,
+    private roleService: RoleService,
+    private alertifyService: AlertifyService,
+    private dialogService: DialogService) {
     super(spinner)
   }
 
-  ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
   displayedColumns: string[] = ['name', 'edit', 'delete'];
   dataSource: MatTableDataSource<List_Role> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   async getRoles() {
-    this.showSpinner(SpinnerType.BallPulseSync);
-    const allRoles: { datas: List_Role[], totalCount: number } = await this.roleService.getRoles(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallPulseSync), errorMessage => this.alertifyService.message(errorMessage, {
+    this.showSpinner(SpinnerType.BallAtom);
+    const allRoles: { datas: List_Role[], totalCount: number } = await this.roleService.getRoles(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallAtom), errorMessage => this.alertifyService.message(errorMessage, {
       dismissOthers: true,
       messageType: MessageType.Error,
-      position: Position.BottomRight
+      position: Position.TopRight
     }))
+
     this.dataSource = new MatTableDataSource<List_Role>(allRoles.datas);
     this.paginator.length = allRoles.totalCount;
-    this.dataSource.paginator = this.paginator;
   }
-
 
   async pageChanged() {
     await this.getRoles();
