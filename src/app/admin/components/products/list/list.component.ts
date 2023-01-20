@@ -4,11 +4,12 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Product } from 'src/app/contracts/list_product';
+import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -16,7 +17,7 @@ declare var $:any;
 })
 export class ListComponent extends BaseComponent implements OnInit, AfterViewInit {
 
-  constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertifyService: AlertifyService,private dialogService:DialogService) {
+  constructor(spinner: NgxSpinnerService, private productService: ProductService, private alertifyService: AlertifyService, private dialogService: DialogService) {
     super(spinner)
   }
 
@@ -24,13 +25,13 @@ export class ListComponent extends BaseComponent implements OnInit, AfterViewIni
     throw new Error('Method not implemented.');
   }
 
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate','photos','edit','delete'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate', 'photos', 'edit', 'qrcode', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   async getProducts() {
     this.showSpinner(SpinnerType.BallPulseSync);
-    const allProducts: {totalCount:number;products:List_Product[]} = await this.productService.read(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallPulseSync), errorMessage => this.alertifyService.message(errorMessage, {
+    const allProducts: { totalCount: number; products: List_Product[] } = await this.productService.read(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallPulseSync), errorMessage => this.alertifyService.message(errorMessage, {
       dismissOthers: true,
       messageType: MessageType.Error,
       position: Position.BottomRight
@@ -40,21 +41,29 @@ export class ListComponent extends BaseComponent implements OnInit, AfterViewIni
     this.dataSource.paginator = this.paginator;
   }
 
-  addProductImages(id:string){
+  addProductImages(id: string) {
     this.dialogService.openDialog({
-      componentType:SelectProductImageDialogComponent,
-      data:id,
-      options:{
-        width:"1400px"
+      componentType: SelectProductImageDialogComponent,
+      data: id,
+      options: {
+        width: "1400px"
       }
     });
   }
 
-  async pageChanged(){
+  async pageChanged() {
     await this.getProducts();
   }
 
   async ngOnInit() {
     await this.getProducts();
+  }
+
+  showQrCode(productId: string) {
+    this.dialogService.openDialog({
+      componentType: QrcodeDialogComponent,
+      data: productId,
+      afterClsoed: () => { }
+    })
   }
 }
