@@ -28,7 +28,7 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   async getRoles() {
     this.showSpinner(SpinnerType.BallAtom);
-    const allRoles: { datas: List_Role[], totalCount: number } = await this.roleService.getRoles(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallAtom), errorMessage => this.alertifyService.message(errorMessage, {
+    const allRoles: { datas: List_Role[], totalCount: number } = await this.roleService.getRoles(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerType.BallAtom), (errorMessage: any) => this.alertifyService.message(errorMessage.errorMessage, {
       dismissOthers: true,
       messageType: MessageType.Error,
       position: Position.TopRight
