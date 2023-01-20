@@ -7,6 +7,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthroizeMenuComponent } from './authroize-menu/authroize-menu.component';
 import { AuthroizeMenuModule } from './authroize-menu/authroize-menu.module';
 import { RolesModule } from './roles/roles.module';
+import { UserModule } from './user/user.module';
 
 
 
@@ -20,7 +21,8 @@ import { RolesModule } from './roles/roles.module';
     CustomersModule,
     DashboardModule,
     AuthroizeMenuModule,
-    RolesModule
+    RolesModule,
+    UserModule
   ]
 })
 export class ComponentsModule { }
